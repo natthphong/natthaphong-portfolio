@@ -22,10 +22,8 @@ const HeroSection = () => {
                         <br></br>
                         <TypeAnimation
                             sequence={[
-                                "Natthaphong Jaroenpronprasit",
+                                "Natthaphong",
                                 1500,
-                                "Software Developer",
-                                1000,
                                 "Backend Developer",
                                 1000,
                                 "Web Developer",
@@ -37,8 +35,7 @@ const HeroSection = () => {
                         />
                     </h1>
                     <p className="text-[#ADB7BE] text-base sm:text-lg mb-6 lg:text-xl">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-                        voluptuous.
+                        I love coding for its creativity, problem-solving, and constant learning.
                     </p>
                     <div>
                         <Link
@@ -67,15 +64,17 @@ const HeroSection = () => {
                     transition={{duration: 0.5}}
                     className="col-span-4 place-self-center mt-4 lg:mt-0"
                 >
-                    <div className="rounded-full bg-[#181818] w-[250px] h-[250px] lg:w-[400px] lg:h-[400px] relative">
+                    <div
+                        className="relative rounded-full bg-[#181818] w-[250px] h-[250px] lg:w-[400px] lg:h-[400px] overflow-hidden">
                         <Image
                             src="/images/hero-image.png"
                             alt="hero image"
-                            className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                            width={300}
-                            height={300}
+                            className="absolute top-0 left-0 w-full h-full object-cover"
+                            width={400}
+                            height={400}
                         />
                     </div>
+
                 </motion.div>
             </div>
         </section>
