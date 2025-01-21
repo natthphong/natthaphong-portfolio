@@ -15,6 +15,8 @@ const TAB_DATA = [
                 <li>Gin,Fiber</li>
                 <li>Websocket</li>
                 <li>Kafka</li>
+                <li>PostgreSQL,MySQL,Oracle,Redis</li>
+                <li>Docker,Jenkins</li>
                 <li>AwsService</li>
             </ul>
         ),
@@ -34,12 +36,19 @@ const TAB_DATA = [
         id: "certifications",
         content: (
             <ul className="list-disc pl-2">
-                <li><Link
+                <li
+                    className="underline"
+                ><Link
                     href="https://certificates.thoughtmachine.net/b946eead-14c7-4abc-a3f8-80ae4a78250f#acc.rqiUd1WM">Vault
-                    Fundamentals</Link></li>
-                <li><Link href="https://www.credly.com/badges/621b7eac-0ff1-4048-baa2-7def1db35a6b/linked_in_profile">Docker
+                    Fundamentals
+                </Link></li>
+                <li
+                    className="underline"
+                ><Link href="https://www.credly.com/badges/621b7eac-0ff1-4048-baa2-7def1db35a6b/linked_in_profile">Docker
                     Essentials: A Developer Introduction</Link></li>
-                <li><Link href="https://www.credly.com/badges/5007ee79-efe4-490c-995e-ef091ef5aea6/linked_in_profile">IBM Blockchain Essentials V2</Link></li>
+                <li
+                    className=" underline"
+                ><Link href="https://www.credly.com/badges/5007ee79-efe4-490c-995e-ef091ef5aea6/linked_in_profile">IBM Blockchain Essentials V2</Link></li>
             </ul>
         ),
     },
