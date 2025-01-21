@@ -71,7 +71,7 @@ const AboutSection = () => {
                 <div className="mt-4 md:mt-0 text-left flex flex-col h-full">
                     <h2 className="text-4xl font-bold text-white mb-4">About Me</h2>
                     <p className="text-base lg:text-lg">
-                        Backend Developer with 2 year of experience in developing various types of applications. Skilled
+                        Backend Developer with 2-3 year of experience in developing various types of applications. Skilled
                         in
                         a wide range of technologies and eager to contribute to challenging projects. Enjoys learning
                         new
