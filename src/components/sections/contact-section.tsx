@@ -1,7 +1,8 @@
 import { ArrowDownTrayIcon, ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
-import { contactLinks, siteConfig } from "@/data/site";
+import { contactLinks } from "@/data/site";
+import { ResumeDownloadLink } from "@/components/ui/resume-download-link";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -47,16 +48,12 @@ export function ContactSection() {
                 Download the latest resume for a concise version of experience, project context,
                 and core technologies.
               </p>
-              <Link
-                href={siteConfig.resumePath}
-                target="_blank"
-                rel="noreferrer"
-                download
+              <ResumeDownloadLink
                 className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/60 px-4 py-2 text-sm font-medium text-white transition hover:border-cyan-300/30 hover:bg-cyan-300/10"
               >
                 <ArrowDownTrayIcon className="h-4 w-4" />
                 Download resume
-              </Link>
+              </ResumeDownloadLink>
             </div>
           </Reveal>
 

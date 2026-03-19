@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { navigation, siteConfig } from "@/data/site";
+import { ResumeDownloadLink } from "@/components/ui/resume-download-link";
 import { cn } from "@/lib/utils";
 import { Container } from "@/components/ui/container";
 
@@ -45,16 +46,12 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <Link
-            href={siteConfig.resumePath}
-            target="_blank"
-            rel="noreferrer"
-            download
+          <ResumeDownloadLink
             className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-medium text-white transition hover:border-cyan-300/40 hover:bg-cyan-300/10"
           >
             <ArrowDownTrayIcon className="h-4 w-4" />
             Resume
-          </Link>
+          </ResumeDownloadLink>
         </div>
 
         <button
@@ -87,17 +84,13 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
-          <Link
-            href={siteConfig.resumePath}
-            target="_blank"
-            rel="noreferrer"
-            download
+          <ResumeDownloadLink
             onClick={() => setMenuOpen(false)}
             className="mt-2 inline-flex items-center justify-center gap-2 rounded-2xl border border-cyan-300/20 bg-cyan-300/10 px-4 py-3 text-sm font-medium text-cyan-100 transition hover:border-cyan-300/40"
           >
             <ArrowDownTrayIcon className="h-4 w-4" />
             Download resume
-          </Link>
+          </ResumeDownloadLink>
         </Container>
       </div>
     </header>

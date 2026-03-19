@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { heroHighlights, siteConfig } from "@/data/site";
+import { ResumeDownloadLink } from "@/components/ui/resume-download-link";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 
@@ -43,16 +44,12 @@ export function HeroSection() {
                 View Projects
                 <ArrowRightIcon className="h-4 w-4" />
               </Link>
-              <Link
-                href={siteConfig.resumePath}
-                target="_blank"
-                rel="noreferrer"
-                download
+              <ResumeDownloadLink
                 className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-medium text-white transition hover:border-cyan-300/40 hover:bg-cyan-300/10"
               >
                 <ArrowDownTrayIcon className="h-4 w-4" />
                 Download Resume
-              </Link>
+              </ResumeDownloadLink>
               <Link
                 href="#contact"
                 className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-transparent px-5 py-3 text-sm font-medium text-slate-200 transition hover:border-white/25 hover:text-white"

@@ -4,7 +4,7 @@ import path from "node:path";
 import { Resend } from "resend";
 
 const DEFAULT_EMAIL_FROM = "no-reply@tarcloud.win";
-const DEFAULT_RESUME_PDF_PATH = "./public/cv.pdf";
+const DEFAULT_RESUME_PDF_PATH = "/cv.pdf";
 const DEFAULT_RESUME_FILENAME = "Natthaphong_Jaroenpronprasit_Resume.pdf";
 
 export type ContactSubmission = {
@@ -63,19 +63,52 @@ function escapeHtml(value: string) {
     .replaceAll("'", "&#39;");
 }
 
-function resolveResumePdfPath(filePath: string) {
-  return path.isAbsolute(filePath) ? filePath : path.resolve(process.cwd(), filePath);
+function getResumePdfCandidates(filePath: string) {
+  const trimmedPath = filePath.trim();
+  const normalizedPublicPath = trimmedPath.replace(/^\/+/, "");
+
+  const candidates = new Set<string>();
+
+  if (path.isAbsolute(trimmedPath)) {
+    candidates.add(trimmedPath);
+  }
+
+  if (trimmedPath.startsWith("/")) {
+    candidates.add(path.resolve(process.cwd(), "public", normalizedPublicPath));
+  }
+
+  candidates.add(path.resolve(process.cwd(), trimmedPath));
+
+  if (!trimmedPath.startsWith("public/") && !trimmedPath.startsWith("./public/")) {
+    candidates.add(path.resolve(process.cwd(), "public", normalizedPublicPath));
+  }
+
+  return Array.from(candidates);
 }
 
 async function loadResumeAttachment(filePath: string) {
-  const resolvedPath = resolveResumePdfPath(filePath);
-  const fileBuffer = await readFile(resolvedPath);
+  const candidatePaths = getResumePdfCandidates(filePath);
+  let lastError: unknown;
 
-  return {
-    filename: DEFAULT_RESUME_FILENAME,
-    content: fileBuffer.toString("base64"),
-    contentType: "application/pdf",
-  };
+  for (const candidatePath of candidatePaths) {
+    try {
+      const fileBuffer = await readFile(candidatePath);
+
+      return {
+        filename: DEFAULT_RESUME_FILENAME,
+        content: fileBuffer.toString("base64"),
+        contentType: "application/pdf",
+        resolvedPath: candidatePath,
+      };
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
+  throw new Error(
+    `Unable to read resume attachment from any configured path. Tried: ${candidatePaths.join(", ")}`,
+    { cause: lastError },
+  );
 }
 
 function buildEmailContent(submission: ContactSubmission) {
@@ -219,6 +252,7 @@ export async function sendContactSubmissionEmail(
       from: config.emailFrom,
       recipients,
       attachmentFilename: attachment.filename,
+      resolvedAttachmentPath: attachment.resolvedPath,
     });
 
     return {

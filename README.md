@@ -15,14 +15,14 @@ Configure the contact form email flow with:
 RESEND_API_KEY=
 EMAIL_FROM=no-reply@tarcloud.win
 EMAIL_NOTIFY_TO=your-real-email@example.com
-EMAIL_RESUME_PDF_PATH=./public/cv.pdf
+EMAIL_RESUME_PDF_PATH=/cv.pdf
 ```
 
 Behavior:
 
 - `EMAIL_FROM` is the sender used for the outgoing email.
 - The email is sent to both the submitted form email and `EMAIL_NOTIFY_TO` when provided.
-- `EMAIL_RESUME_PDF_PATH` is read from disk and attached as `Natthaphong_Jaroenpronprasit_Resume.pdf`.
+- `EMAIL_RESUME_PDF_PATH` is read from disk and attached as `Natthaphong_Jaroenpronprasit_Resume.pdf`. It supports either a public-style path like `/cv.pdf` or a filesystem path like `./public/cv.pdf`.
 - If `EMAIL_NOTIFY_TO` is empty, the email still sends to the submitted form email.
 - If the resume file is missing or unreadable, the API returns a clear error instead of sending a broken email.
 
