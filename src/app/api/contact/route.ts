@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import {
+  isValidEmailAddress,
+  sendContactSubmissionEmail,
+} from "@/lib/contact-email";
 
 const MAX_MESSAGE_LENGTH = 2500;
-
-function isValidEmail(value: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-}
 
 export async function POST(request: Request) {
   let payload: unknown;
@@ -31,7 +30,7 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!isValidEmail(email)) {
+  if (!isValidEmailAddress(email)) {
     return NextResponse.json({ message: "Please enter a valid email address." }, { status: 400 });
   }
 
@@ -42,56 +41,12 @@ export async function POST(request: Request) {
     );
   }
 
-  const resendApiKey = process.env.RESEND_API_KEY;
-  const contactToEmail = process.env.CONTACT_TO_EMAIL ?? "jaroenpronprasit@gmail.com";
-  const contactFromEmail =
-    process.env.CONTACT_FROM_EMAIL ?? "Portfolio Contact <onboarding@resend.dev>";
-
-  if (!resendApiKey) {
-    return NextResponse.json(
-      {
-        message:
-          "The contact form is not configured yet. Please email me directly instead.",
-      },
-      { status: 503 },
-    );
-  }
-
-  const resend = new Resend(resendApiKey);
-  const subject = `Portfolio enquiry from ${name}`;
-  const text = [
-    `Name: ${name}`,
-    `Email: ${email}`,
-    company ? `Company: ${company}` : undefined,
-    "",
+  const result = await sendContactSubmissionEmail({
+    name,
+    email,
+    company,
     message,
-  ]
-    .filter(Boolean)
-    .join("\n");
+  });
 
-  try {
-    const { error } = await resend.emails.send({
-      from: contactFromEmail,
-      to: [contactToEmail],
-      replyTo: email,
-      subject,
-      text,
-    });
-
-    if (error) {
-      return NextResponse.json(
-        { message: "Unable to send the message right now. Please try again later." },
-        { status: 500 },
-      );
-    }
-
-    return NextResponse.json({
-      message: "Message sent successfully. I will get back to you soon.",
-    });
-  } catch {
-    return NextResponse.json(
-      { message: "Unable to send the message right now. Please try again later." },
-      { status: 500 },
-    );
-  }
+  return NextResponse.json({ message: result.message }, { status: result.status });
 }

@@ -7,6 +7,25 @@ Install the dependencies: `npm install`
 1. Start the development server: `npm run dev`
 2. Open your browser and visit `http://localhost:3000` to view the website.
 
+## Email configuration
+
+Configure the contact form email flow with:
+
+```bash
+RESEND_API_KEY=
+EMAIL_FROM=no-reply@tarcloud.win
+EMAIL_NOTIFY_TO=your-real-email@example.com
+EMAIL_RESUME_PDF_PATH=./public/cv.pdf
+```
+
+Behavior:
+
+- `EMAIL_FROM` is the sender used for the outgoing email.
+- The email is sent to both the submitted form email and `EMAIL_NOTIFY_TO` when provided.
+- `EMAIL_RESUME_PDF_PATH` is read from disk and attached as `Natthaphong_Jaroenpronprasit_Resume.pdf`.
+- If `EMAIL_NOTIFY_TO` is empty, the email still sends to the submitted form email.
+- If the resume file is missing or unreadable, the API returns a clear error instead of sending a broken email.
+
 ## Dependencies
 
 The following dependencies are required for this project:
@@ -21,4 +40,3 @@ The following dependencies are required for this project:
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT). Feel free to use, modify, and distribute the code as per the terms of the license.
-
